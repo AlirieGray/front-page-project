@@ -1,5 +1,5 @@
 var Post = require('../models/post');
-
+var bodyParser = require('body-parser');
 module.exports = function(app) {
 
   // CREATE
