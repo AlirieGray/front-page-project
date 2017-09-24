@@ -27,6 +27,10 @@ app.get('/posts/:id', function(req, res) {
   })
 })
 
+app.get('/n/:subreddit', function(req, res) {
+  console.log(req.params.subreddit);
+});
+
 app.listen(3000, function() {
   console.log("Listening on port 3000!");
 });

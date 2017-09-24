@@ -4,6 +4,7 @@ module.exports = function(app) {
 
   // CREATE
   app.post('/posts', function (req, res) {
+    console.log(req.body);
     // INSTANTIATE INSTANCE OF POST MODEL
     var post = new Post(req.body);
 
@@ -13,5 +14,4 @@ module.exports = function(app) {
       return res.redirect('/');
     })
   });
-
 };
