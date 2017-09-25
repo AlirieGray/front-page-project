@@ -23,6 +23,7 @@ UserSchema.pre('save', function(next) {
   if (!user.isModified('password')) {
     return next();
   }
+
   bcrypt.genSalt(10, function(err, salt) {
     bcrypt.hash(user.password, salt, function(err, hash) {
       user.password = hash;
@@ -35,6 +36,6 @@ UserSchema.methods.comparePassword = function(password, done) {
   bcrypt.compare(password, this.password, function(err, isMatch) {
     done(err, isMatch);
   });
-};
+}; 
 
 module.exports = mongoose.model('User', UserSchema);

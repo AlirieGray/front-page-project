@@ -9,7 +9,7 @@ module.exports = function(app) {
 
     user.save(function (err) {
       if (err) {
-        return res.status(400).send({ err: err});
+        return res.status(400).send({ err: err });
       }
       var token = jwt.sign({ id: user.id}, process.env.SECRET, { expiresIn: "60 days"});
       // set the cookie
