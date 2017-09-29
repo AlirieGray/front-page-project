@@ -1,17 +1,27 @@
 var Post = require('../models/post');
 var bodyParser = require('body-parser');
+var User = require('../models/user');
 module.exports = function(app) {
 
-  // CREATE
-  app.post('/posts', function (req, res) {
-    console.log(req.body);
-    // INSTANTIATE INSTANCE OF POST MODEL
-    var post = new Post(req.body);
+  app.post('/posts/:userid', function (req, res) {
 
-    // SAVE INSTANCE OF POST MODEL TO DB
-    post.save(function (err, post) {
-      // REDIRECT TO THE ROOT
-      return res.redirect('/');
+    User.findById(req.params.id).exec(function (err, user) {
+      var post = new Post(req.body);
+      post.save(function (err, post) {
+        return res.redirect('/');
+      });
+    });
+    /*
+    const userId = req.user.id;
+    User.findById(userId).then((user)=>{
+      const post = new Post(req.body);
+      return post.save();
+    }).then((post) => {
+      res.redirect('/')
+    }).catch((err)=>{
+      console.log(err);
     })
+    */
+
   });
 };

@@ -1,14 +1,16 @@
 <!-- posts-index.handlebars -->
 <nav class="navbar navbar-default">
   <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" onclick="location.href = '/posts/new'; return false;" class="btn btn-default navbar-btn">New post</button>
-    </div>
     <ul class="nav navbar-nav navbar-right">
-      {{#unless currentUser}}
+      {{#if currentUser}}
+      <div class="navbar-header">
+        <button type="button" onclick="location.href = '/posts/new'; return false;" class="btn btn-default navbar-btn">New post</button>
+      </div>
+        <li><a href="/logout">Logout</a></li>
+      {{else}}
         <li><a href="/login">Login</a></li>
         <li><a href="/sign-up">Sign Up</a></li>
-      {{/unless}}
+      {{/if}}
     </ul>
   </div>
 </nav>

@@ -32,10 +32,12 @@ UserSchema.pre('save', function(next) {
   });
 });
 
+/* takes in a password string and returns true if it
+  * matches the password in the database, false otherwise */
 UserSchema.methods.comparePassword = function(password, done) {
   bcrypt.compare(password, this.password, function(err, isMatch) {
     done(err, isMatch);
   });
-}; 
+};
 
 module.exports = mongoose.model('User', UserSchema);
