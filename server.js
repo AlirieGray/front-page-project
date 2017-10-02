@@ -58,6 +58,8 @@ app.get('/posts/new', function(req, res) {
 // show a particular post
 app.get('/posts/:id', function(req, res) {
   Post.findById(req.params.id).populate('author').exec(function(err, post) {
+    var comments = post.comments;
+    console.log(comments);
     res.render('show-post', {post: post, currentUser: req.user, comments: post.comments});
   })
 });
