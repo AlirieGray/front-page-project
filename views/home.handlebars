@@ -1,8 +1,17 @@
-<!-- home.handlebars -->
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" onclick="location.href = '/posts/new'; return false;" class="btn btn-default navbar-btn">New post</button>
-    </div>
-  </div>
-</nav>
+<h1> The Front Page </h1>
+
+{{#if currentUser}}
+  <button onclick="location.href = '/posts/new'; return false;"> Create New Post </button>
+  <button onclick="location.href = '/logout'; return false;"> Logout </button>
+{{else}}
+  <button onclick="location.href = '/login'; return false;"> Login </button>
+  <button onclick="location.href = '/sign-up'; return false;"> Sign Up </button>
+{{/if}}
+
+
+{{#each post}}
+<div>
+  <h2> {{this.title}} </h2>
+  <p> {{this.summary}} </p>
+</div>
+{{/each}}

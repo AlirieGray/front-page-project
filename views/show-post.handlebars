@@ -1,15 +1,3 @@
-<div class="row">
-  <div class="col-sm-6 col-sm-offset-3">
-    <a href="{{post.url}}" class="lead">{{post.title}}</a>
-    <p>{{post.summary}}</p>
-    <form method="POST" action="/posts/{{post.id}}/comments">
-      <textarea class='form-control' name="content" placeholder="Comment"></textarea>
-      <div class="text-right">
-        <button type="submit">Save</button>
-      </div>
-      {{#each post.comments}}
-        <p> {{this.content}} </p>
-      {{/each}}
-    </form>
-  </div>
-</div>
+<p> {{post.title}} </p>
+<p> {{post.summary}} </p>
+<p> Created By: {{post.author.username}} </p>

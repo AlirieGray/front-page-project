@@ -1,19 +1,11 @@
-<!-- sign-up.handlebars -->
-<div class="row">
-  <div class="col-sm-4 col-sm-offset-4">
-    <form method="POST" action="/sign-up">
-      <legend>Sign up</legend>
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" name="username" class="form-control" id="post-title" placeholder="Username">
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" name="password" class="form-control" id="post-title" placeholder="Password">
-      </div>
-      <div class='text-right'>
-        <button type="submit" class="btn btn-primary">Sign Up!<button>
-      </div>
-    </form>
+<form method="POST" action="/sign-up">
+  <div>
+    <label for="username" />
+    <input type="text" name="username" id="username" placeholder="Username"/>
   </div>
-</div>
+  <div>
+    <label for="password" />
+    <input type="password" name="password" id="password" placeholder="Password"/>
+  </div>
+  <button type="submit">Sign up</button>
+</form>
