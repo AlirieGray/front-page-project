@@ -1,3 +1,14 @@
+<button onclick="location.href = '/'; return false;"> Home </button>
+
 <p> {{post.title}} </p>
 <p> {{post.summary}} </p>
 <p> Created By: {{post.author.username}} </p>
+<form method="POST" action="/posts/{{post.id}}/comments" >
+  <textarea name="content" id="commentInput" placeholder="Write a comment"> </textarea>
+  <input type="hidden" name="user" id="post-user" value={{currentUser}} />
+  <button type="submit"> Submit </button>
+</form>
+{{#each comments}}
+  <p> ** </p>
+  <p> {{this.content}} </p>
+{{/each}}

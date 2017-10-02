@@ -3,6 +3,28 @@ var User = require('../models/user');
 var jwt = require('jsonwebtoken');
 
 module.exports = function(app) {
+
+  // post login
+  app.post('/login', function(req, res, next) {
+    User.findOne({ username: req.body.username }, "+password", function (err, user) {
+      if (!user) { return res.status(401).send({ message: 'Wrong email or password' }) };
+      user.comparePassword(req.body.password, function (err, isMatch) {
+        if (!isMatch) {
+          return res.status(401).send({ message: 'Wrong email or password' });
+        }
+        var token = jwt.sign({ id: user.id }, process.env.SECRET, { expiresIn: "60 days" });
+        res.cookie('nToken', token, { maxAge: 900000, httpOnly: true });
+        res.redirect('/');
+      });
+    });
+  });
+
+  // logout
+  app.get('/logout', function(req, res) {
+    res.clearCookie('nToken');
+    res.redirect('/');
+  });
+
   app.post('/sign-up', function(req, res, next) {
     // create User and JWT
     var user = new User(req.body);

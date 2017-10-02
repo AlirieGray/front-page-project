@@ -40,50 +40,31 @@ mongoose.connect('mongodb://localhost/test');
 /***** import database models *****/
 var Post = require('./models/post');
 var User = require('./models/user');
+var Comment = require('./models/comment');
 
 /***** routes *****/
 app.get('/', function(req, res) {
   Post.find(function(err, posts) {
+    var currentUser;
     res.render('home', { post: posts, currentUser: req.user });
   });
 });
 
 // make a new post
 app.get('/posts/new', function(req, res) {
-  res.render('new-post', { currentUser: req.user.id});
+  res.render('new-post', { currentUser: req.user});
 });
 
 // show a particular post
 app.get('/posts/:id', function(req, res) {
   Post.findById(req.params.id).populate('author').exec(function(err, post) {
-    res.render('show-post', {post: post});
+    res.render('show-post', {post: post, currentUser: req.user, comments: post.comments});
   })
 });
 
 // login page
 app.get('/login', function(req, res) {
   res.render('login');
-});
-
-// post login
-app.post('/login', function(req, res, next) {
-  User.findOne({ username: req.body.username }, "+password", function (err, user) {
-    if (!user) { return res.status(401).send({ message: 'Wrong email or password' }) };
-    user.comparePassword(req.body.password, function (err, isMatch) {
-      if (!isMatch) {
-        return res.status(401).send({ message: 'Wrong email or password' });
-      }
-      var token = jwt.sign({ id: user.id }, process.env.SECRET, { expiresIn: "60 days" });
-      res.cookie('nToken', token, { maxAge: 900000, httpOnly: true });
-      res.redirect('/');
-    });
-  });
-});
-
-// logout
-app.get('/logout', function(req, res) {
-  res.clearCookie('nToken');
-  res.redirect('/');
 });
 
 // get sign-up
@@ -105,6 +86,7 @@ app.post('/sign-up', function(req, res, next) {
 /***** import controllers for database models *****/
 require('./controller/post-controller.js')(app);
 require('./controller/auth.js')(app);
+require('./controller/comment-controller.js')(app);
 
 /***** start the server *****/
 app.listen(3000, function() {
