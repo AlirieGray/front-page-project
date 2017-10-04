@@ -27,8 +27,9 @@ var checkAuth = function (req, res, next) {
     var decodedToken = jwt.decode(token, { complete: true }) || {};
     req.user = decodedToken.payload;
     console.log("user set");
+    console.log(req.user.id);
   }
-  console.log(req.user);
+  // console.log(req.user);
   next();
 }
 app.use(checkAuth);
@@ -46,13 +47,13 @@ var Comment = require('./models/comment');
 app.get('/', function(req, res) {
   Post.find(function(err, posts) {
     var currentUser;
-    res.render('home', { post: posts, currentUser: req.user });
+    res.render('home', { post: posts, currentUserId: req.user.id });
   });
 });
 
 // make a new post
 app.get('/posts/new', function(req, res) {
-  res.render('new-post', { currentUser: req.user});
+  res.render('new-post', { currentUserId: req.user.id});
 });
 
 // show a particular post
@@ -60,7 +61,8 @@ app.get('/posts/:id', function(req, res) {
   Post.findById(req.params.id).populate('author').exec(function(err, post) {
     var comments = post.comments;
     console.log(comments);
-    res.render('show-post', {post: post, currentUser: req.user, comments: post.comments});
+    // TODO: fix issue where we can't look at post if not logged in (bc user._id == null)
+    res.render('show-post', {post: post, currentUserId: req.user.id, comments: post.comments});
   })
 });
 
@@ -79,6 +81,7 @@ app.post('/sign-up', function(req, res, next) {
   // Create User and JWT
   var user = new User(req.body);
 
+  // save user to database
   user.save(function (err) {
     if (err) { return res.status(400).send({ err: err }) }
     res.redirect('/');

@@ -1,6 +1,6 @@
 <h1> The Front Page </h1>
 
-{{#if currentUser}}
+{{#if currentUserId}}
   <button onclick="location.href = '/posts/new'; return false;"> Create New Post </button>
   <button onclick="location.href = '/logout'; return false;"> Logout </button>
 {{else}}
