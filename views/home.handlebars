@@ -13,10 +13,10 @@
 <div>
   <a href="/posts/{{this.id}}"> {{this.title}} </a>
   <p> {{this.summary}} </p>
-  <form class="vote-up" data-id="{{this.id}}">
+  <form class="vote-up" data-id="{{this._id}}">
     <button type="submit"> Vote up </button>
   </form>
-  <form class="vote-down" data-id="{{this.id}}">
+  <form class="vote-down" data-id="{{this._id}}">
     <button type="submit"> Vote down </button>
   </form>
 </div>

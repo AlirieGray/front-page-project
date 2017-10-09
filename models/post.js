@@ -7,6 +7,8 @@ var PostSchema = new Schema({
   , summary         : {  type: String, required: true }
   , subreddit       : {  type: String, required: true }
   , comments        : [Comment.schema]
+  , downVotes       : [String]
+  , upVotes         : [String]
   , author          : {  type: Schema.Types.ObjectId, ref: 'User', required: false }
 });
 

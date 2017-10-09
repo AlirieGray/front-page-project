@@ -4,24 +4,26 @@ const mongoose = require('mongoose');
 
 module.exports = function(app) {
   app.put('posts/:id/vote-up', function (req, res) {
-  Post.findById(req.params.id).exec(function (err, post) {
-    post.upVotes.push(req.user._id)
-    post.voteScore = post.voteTotal + 1
-    post.save();
+    console.log("up vote");
+    Post.findById(req.params.id).exec(function (err, post) {
+      post.upVotes.push(req.user.id)
+      post.voteScore = post.voteTotal + 1
+      post.save();
 
-    res.status(200);
-  })
-})
+      res.status(200);
+  });
+});
 
   app.put('posts/:id/vote-down', function (req, res) {
-  Post.findById(req.params.id).exec(function (err, post) {
-    post.downVotes.push(req.user._id)
-    post.voteScore = post.voteTotal - 1
-    post.save();
+    console.log("down vote");
+    Post.findById(req.params.id).exec(function (err, post) {
+      post.downVotes.push(req.user.id)
+      post.voteScore = post.voteTotal - 1
+      post.save();
 
-    res.status(200);
-  })
-})
+      res.status(200);
+  });
+});
 
   app.post('/posts', function(req, res) {
   console.log(req.body.userId);
