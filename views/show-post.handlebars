@@ -16,4 +16,8 @@
     <input type="hidden" name="userId" id="post-user-id" value={{currentUserId}} />
     <button type="submit"> Reply </button>
   </form>
+  {{#each this.replies}}
+    <p> {{this.content}} </p>
+    <p> reply is here! </p>
+  {{/each}}
 {{/each}}

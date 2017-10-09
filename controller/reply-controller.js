@@ -29,8 +29,10 @@ module.exports = function(app) {
         console.log(comment.replies);
         post.markModified('comments');
         return(post.save());
+      }).then(() => {
+        res.redirect('/posts/' + postId);
       })
-      res.redirect('/posts/' + postId);
+
     })
 
   });
