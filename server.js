@@ -8,6 +8,10 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
+// note upvotes and downvotes are an array of *users*
+// if your is in the upvotes array, you can't add to it again
+// similarly, if you have upvoted and then click downvote, you're removed from up and added to down
+
 /***** set up middleware *****/
 app.engine('handlebars', hb({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
@@ -27,7 +31,7 @@ var checkAuth = function (req, res, next) {
     var decodedToken = jwt.decode(token, { complete: true }) || {};
     req.user = decodedToken.payload;
     console.log("user set");
-    console.log(req.user.id);
+    console.log(req.user);
   }
   // console.log(req.user);
   next();
@@ -47,22 +51,39 @@ var Comment = require('./models/comment');
 app.get('/', function(req, res) {
   Post.find(function(err, posts) {
     var currentUser;
-    res.render('home', { post: posts, currentUserId: req.user.id });
+    if (req.user) {
+      currentUser = req.user.id;
+    } else {
+      currentUser = 0;
+    }
+    res.render('home', { post: posts, currentUserId: currentUser });
   });
 });
 
 // make a new post
 app.get('/posts/new', function(req, res) {
-  res.render('new-post', { currentUserId: req.user.id});
+  var currentUser;
+  if (req.user) {
+    currentUser = req.user.id;
+  } else {
+    currentUser = 0;
+  }
+  res.render('new-post', { currentUserId: currentUser});
 });
 
 // show a particular post
 app.get('/posts/:id', function(req, res) {
-  Post.findById(req.params.id).populate('author').exec(function(err, post) {
+  Post.findById(req.params.id).populate('author').populate('comments').exec(function(err, post) {
     var comments = post.comments;
-    console.log(comments);
+
+    var currentUser;
+    if (req.user) {
+      currentUser = req.user.id;
+    } else {
+      currentUser = 0;
+    }
     // TODO: fix issue where we can't look at post if not logged in (bc user._id == null)
-    res.render('show-post', {post: post, currentUserId: req.user.id, comments: post.comments});
+    res.render('show-post', {post: post, currentUserId: currentUser, comments: post.comments});
   })
 });
 
@@ -92,6 +113,7 @@ app.post('/sign-up', function(req, res, next) {
 require('./controller/post-controller.js')(app);
 require('./controller/auth.js')(app);
 require('./controller/comment-controller.js')(app);
+require('./controller/reply-controller')(app);
 
 /***** start the server *****/
 app.listen(3000, function() {

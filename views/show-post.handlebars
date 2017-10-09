@@ -1,6 +1,6 @@
 <button onclick="location.href = '/'; return false;"> Home </button>
 
-<p> {{post.title}} </p>
+<h1> {{post.title}} </h1>
 <p> {{post.summary}} </p>
 <p> Created By: {{post.author.username}} </p>
 <form method="POST" action="/posts/{{post.id}}/comments" >
@@ -9,7 +9,11 @@
   <button type="submit"> Submit </button>
 </form>
 {{#each comments}}
-  <p> ** </p>
   <p> {{this.content}} </p>
-  <p> {{this.author}} </p>
+  <p> Created by: {{this.author}} </p>
+  <form method="POST" action="/posts/{{@root.post.id}}/comments/{{this.id}}/replies" >
+    <textarea name="content" id="commentInput" placeholder="Reply to this comment"> </textarea>
+    <input type="hidden" name="userId" id="post-user-id" value={{currentUserId}} />
+    <button type="submit"> Reply </button>
+  </form>
 {{/each}}
