@@ -8,7 +8,6 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
-// TODO: add anonymous commenting (see how it is handled w/ post route)
 // TODO: fix comments on comments (adds to databse but not appearing?)
 // TODO: fix style
 

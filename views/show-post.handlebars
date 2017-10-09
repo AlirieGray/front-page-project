@@ -12,7 +12,7 @@
   <p> {{this.content}} </p>
   <p> Created by: {{this.author}} </p>
   <form method="POST" action="/posts/{{@root.post.id}}/comments/{{this.id}}/replies" >
-    <textarea name="content" id="commentInput" placeholder="Reply to this comment"> </textarea>
+    <textarea name="content" id="replyInput" placeholder="Reply to this comment"> </textarea>
     <input type="hidden" name="userId" id="post-user-id" value={{currentUserId}} />
     <button type="submit"> Reply </button>
   </form>
