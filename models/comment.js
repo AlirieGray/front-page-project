@@ -4,7 +4,7 @@ const mongoose = require('mongoose'),
 var CommentSchema = new Schema({
   content             : {  type: String, required: true }
   , author            : {  type: String, required: true }
-  , authorId          : {  type: Number}
+  , authorId          : {  type: String, required: true }
   , replies           : [this]
 });
 

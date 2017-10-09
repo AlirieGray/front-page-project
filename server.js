@@ -8,6 +8,10 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
+// TODO: add anonymous commenting (see how it is handled w/ post route)
+// TODO: fix comments on comments (adds to databse but not appearing?)
+// TODO: fix style
+
 // note upvotes and downvotes are an array of *users*
 // if your is in the upvotes array, you can't add to it again
 // similarly, if you have upvoted and then click downvote, you're removed from up and added to down
@@ -62,27 +66,20 @@ app.get('/', function(req, res) {
 
 // make a new post
 app.get('/posts/new', function(req, res) {
-  var currentUser;
+  var currentUser = 0;
   if (req.user) {
     currentUser = req.user.id;
-  } else {
-    currentUser = 0;
   }
   res.render('new-post', { currentUserId: currentUser});
 });
 
 // show a particular post
 app.get('/posts/:id', function(req, res) {
-  Post.findById(req.params.id).populate('author').populate('comments').exec(function(err, post) {
-    var comments = post.comments;
-
-    var currentUser;
+  Post.findById(req.params.id).populate('author').exec(function(err, post) {
+    var currentUser = 0;
     if (req.user) {
       currentUser = req.user.id;
-    } else {
-      currentUser = 0;
     }
-    // TODO: fix issue where we can't look at post if not logged in (bc user._id == null)
     res.render('show-post', {post: post, currentUserId: currentUser, comments: post.comments});
   })
 });

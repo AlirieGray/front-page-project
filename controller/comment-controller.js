@@ -5,7 +5,8 @@ const mongoose = require('mongoose');
 
 module.exports = function(app) {
   app.post('/posts/:id/comments', function(req, res) {
-    // anonymouse comment
+    // anonymous comment
+    var id = req.params.id;
     if (req.body.userId == 0) {
       var user = new User({
         username: "anonymous",
@@ -15,9 +16,6 @@ module.exports = function(app) {
         content: req.body.content,
         author: user.username,
       });
-      console.log(req.body.content);
-      console.log(comm.content);
-      var id = req.params.id;
       Post.findById(req.params.id).exec(function(err, post) {
         comm.save(function (err, comment) {
           post.comments.unshift(comment);
@@ -32,10 +30,6 @@ module.exports = function(app) {
         content: req.body.content,
         author: user.username,
       });
-      console.log("comment " + comm);
-      console.log("user Name " + user.username);
-      console.log(req.body.content);
-      var id = req.params.id;
       Post.findById(req.params.id).exec(function(err, post) {
         comm.save(function (err, comment) {
           post.comments.unshift(comment);
