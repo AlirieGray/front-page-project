@@ -11,8 +11,8 @@ require('dotenv').config();
 // TODO: fix comments on comments (adds to databse but not appearing?)
 // TODO: fix style
 
-// note upvotes and downvotes are an array of *users*
-// if your is in the upvotes array, you can't add to it again
+// note: upvotes and downvotes are an array of *users ids*
+// if your id is in the upvotes array, you can't add to it again
 // similarly, if you have upvoted and then click downvote, you're removed from up and added to down
 
 /***** set up middleware *****/

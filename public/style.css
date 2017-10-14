@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  background-color: red;
+}
+
+.vote-up > button {
+  color: green;
+}
+.vote-down > button {
+  color: red;
+}
