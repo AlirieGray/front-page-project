@@ -21,7 +21,7 @@
       padding-left: 10px;
       padding-right: 10px;
     }
-    .loginButtons > button, .subreddits > button {
+    .loginButtons > button, .subreddits > button, .homeButton > button {
       border-style: none;
       border-radius: 4px;
       background-color: inherit;
@@ -35,26 +35,45 @@
     .postContainer {
       display: flex;
       flex-direction: row-reverse;
-      width: 500px;
       padding: 20px;
       justify-content: center;
       align-items: center;
       margin: 10px;
     }
     .postTitle {
-
+      font-size: 20px;
+    }
+    .postContent {
+      height: 200px;
+      width: 400px;
+      border-bottom-style: solid;
     }
     .voteButtons {
-
+      height: 200px;
     }
     .vote-down > button, .vote-up > button {
-      width: 80px;
+      background: none !important;
+      border: none;
+      margin-right: 7px;
     }
     hr {
       border: none;
       border-radius: 2px;
       height: 2px;
       background-color: #BDBDBD;
+    }
+    .showPostTitle {
+      text-align: center;
+    }
+    .showPostContent {
+      margin: auto;
+      width: 600px;
+      text-align: justify;
+    }
+    .showPostComments {
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: center;
     }
 
   </style>
