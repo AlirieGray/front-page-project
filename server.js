@@ -10,6 +10,7 @@ require('dotenv').config();
 
 // TODO: fix comments on comments (adds to databse but not appearing?)
 // TODO: fix style
+// TODO: figure out how to serve css from public folder 
 
 // note: upvotes and downvotes are an array of *users ids*
 // if your id is in the upvotes array, you can't add to it again

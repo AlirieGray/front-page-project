@@ -1,27 +1,49 @@
-<h1> The Front Page </h1>
+<header class="pageHeader">
+  <div class="subreddits">
+    <button> Politics </button>
+    <button> Gaming </button>
+    <button> Food </button>
+    <button> Technology </button>
+    <button> Orange Juice </button>
+  </div>
+  <div class="loginButtons">
+  {{#if currentUserId}}
+    <button onclick="location.href = '/posts/new'; return false;"> Create New Post </button>
+    <button onclick="location.href = '/logout'; return false;"> Logout </button>
+    {{else}}
+    <button onclick="location.href = '/login'; return false;"> Login </button>
+    <button onclick="location.href = '/sign-up'; return false;"> Sign Up </button>
+    {{/if}}
+  </div>
 
-{{#if currentUserId}}
-  <button onclick="location.href = '/posts/new'; return false;"> Create New Post </button>
-  <button onclick="location.href = '/logout'; return false;"> Logout </button>
-{{else}}
-  <button onclick="location.href = '/login'; return false;"> Login </button>
-  <button onclick="location.href = '/sign-up'; return false;"> Sign Up </button>
-{{/if}}
+</header>
 
-<div style="container"
+<main>
+<div class="pageTitle">
+  <h1> The Front Page </h1>
+  <hr>
+</div>
 
+<div class="posts">
 {{#each post}}
-<div>
-  <a href="/posts/{{this.id}}"> {{this.title}} </a>
-  <p> {{this.summary}} </p>
-  <form class="vote-up" data-id="{{this._id}}">
-    <button type="submit"> Vote up </button>
-  </form>
-  <form class="vote-down" data-id="{{this._id}}">
-    <button type="submit"> Vote down </button>
-  </form>
+<div class="postContainer">
+
+  <div class="postContent">
+    <a class="postTitle" href="/posts/{{this.id}}"> {{this.title}} </a>
+    <p class="postSummary"> {{this.summary}} </p>
+  </div>
+
+  <div class="voteButtons">
+    <form class="vote-up" data-id="{{this._id}}">
+      <button type="submit"> &#9650; </button>
+    </form>
+    <form class="vote-down" data-id="{{this._id}}">
+      <button type="submit"> &#9660; </button>
+    </form>
+  </div>
+
 </div>
 {{/each}}
-
-
 </div>
+
+</main>

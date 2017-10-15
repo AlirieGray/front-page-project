@@ -1,11 +1,4 @@
-.container {
-  display: flex;
-  background-color: red;
-}
 
-.vote-up > button {
+h1 {
   color: green;
-}
-.vote-down > button {
-  color: red;
 }
