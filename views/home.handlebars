@@ -7,12 +7,12 @@
     <button> Orange Juice </button>
   </div>
   <div class="loginButtons">
-  {{#if currentUserId}}
-    <button onclick="location.href = '/posts/new'; return false;"> Create New Post </button>
-    <button onclick="location.href = '/logout'; return false;"> Logout </button>
+    {{#if currentUserId}}
+      <button onclick="location.href = '/posts/new'; return false;"> Create New Post </button>
+      <button onclick="location.href = '/logout'; return false;"> Logout </button>
     {{else}}
-    <button onclick="location.href = '/login'; return false;"> Login </button>
-    <button onclick="location.href = '/sign-up'; return false;"> Sign Up </button>
+      <button data-target="modalL"> Login </button>
+      <button onclick="location.href = '/sign-up'; return false;"> Sign Up </button>
     {{/if}}
   </div>
 
@@ -47,3 +47,16 @@
 </div>
 
 </main>
+
+
+<!-- Modal Structure -->
+<div id="modalL" class="modal">
+  <form method="post" action="/login">
+    <input name="username" placeholder="username"/>
+    <input name="password" type="password" placeholder="password"/>
+    <div>
+      <button type="submit">Log In</button>
+      <!-- <button onclick="location.href = '/login'; return false;"> Login </button> -->
+    </div>
+  </form>
+</div>
