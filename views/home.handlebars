@@ -11,8 +11,8 @@
       <button onclick="location.href = '/posts/new'; return false;"> Create New Post </button>
       <button onclick="location.href = '/logout'; return false;"> Logout </button>
     {{else}}
-      <button data-target="modalL"> Login </button>
-      <button onclick="location.href = '/sign-up'; return false;"> Sign Up </button>
+      <button class="modal-trigger" data-target="modalL"> Login </button>
+      <button class="modal-trigger" data-target="modalS"> Sign Up </button>
     {{/if}}
   </div>
 
@@ -51,12 +51,22 @@
 
 <!-- Modal Structure -->
 <div id="modalL" class="modal">
-  <form method="post" action="/login">
+  <form class="modal-content" method="post" action="/login">
+    <input name="username" placeholder="username"/>
+    <input name="password" type="password" placeholder="password"/>
+    <div class="modal-footer">
+      <button class="modal-action modal-close waves-effect waves-green btn-flat" type="submit">Log In</button>
+    </div>
+  </form>
+</div>
+
+<!-- Modal Structure -->
+<div id="modalS" class="modal">
+  <form method="post" action="/sign-up">
     <input name="username" placeholder="username"/>
     <input name="password" type="password" placeholder="password"/>
     <div>
-      <button type="submit">Log In</button>
-      <!-- <button onclick="location.href = '/login'; return false;"> Login </button> -->
+      <button type="submit">Sign Up</button>
     </div>
   </form>
 </div>
