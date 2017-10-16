@@ -5,16 +5,20 @@
   <meta charset="utf-8">
   <Title> The Front Page of the Internet </Title>
   <link rel="stylesheet" href="/style.css" >
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script rel="script" src="/js/posts.js"></script>
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script>
-    $(function(){
-      $('.modal').modal();
-    });
+  $(document).ready(function(){
+    console.log("running on doc ready");
+    $('.modal').modal();
+  });
   </script>
   <style>
-
+    body {
+      font-family: times !important;
+    }
     .pageTitle {
       padding-left: 20px;
       padding-right: 20px;
@@ -47,7 +51,7 @@
       margin: 10px;
     }
     .postTitle {
-      font-size: 20px;
+      font-size: 25px;
     }
     .postContent {
       height: 200px;
@@ -70,6 +74,7 @@
     }
     .showPostTitle {
       text-align: center;
+      font-size: 38px !important;
     }
     .showPostContent {
       margin: auto;
@@ -80,7 +85,11 @@
       display: flex;
       flex-direction: column-reverse;
       justify-content: center;
-      width:
+      width: 600px;
+      margin: auto;
+    }
+    p {
+      font-size: 20px !important;
     }
 
   </style>

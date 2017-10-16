@@ -8,26 +8,28 @@
 <div class="showPostContent">
   <p style="margin-bottom:40px;"> {{post.summary}} </p>
   <hr>
-  <p> Created By: {{post.author.username}} </p>
-</div>
+  <p style="margin-bottom:40px;"> Created By: {{post.author.username}} </p>
 
-<div class="showPostComments">
   <div>
     <form method="POST" action="/posts/{{post.id}}/comments" >
       <textarea name="content" id="commentInput" placeholder="Write a comment"> </textarea>
       <input type="hidden" name="userId" id="post-user-id" value={{currentUserId}} />
-      <button type="submit"> Submit </button>
+      <button class="btn-flat" type="submit"> Submit </button>
     </form>
   </div>
 
+</div>
+
+
+<div class="showPostComments">
   {{#each comments}}
   <div>
     <p> {{this.content}} </p>
-    <p> Created by: {{this.author}} </p>
+    <p> Comment by: {{this.author}} </p>
     <form method="POST" action="/posts/{{@root.post.id}}/comments/{{this.id}}/replies" >
       <textarea name="content" id="replyInput" placeholder="Reply to this comment"> </textarea>
       <input type="hidden" name="userId" id="post-user-id" value={{currentUserId}} />
-      <button type="submit"> Reply </button>
+      <button class="btn-flat" type="submit"> Reply </button>
     </form>
   </div>
 
