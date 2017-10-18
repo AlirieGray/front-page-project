@@ -20,9 +20,16 @@ describe('testing posts', () => {
       subreddit: "orange juice",
     });
     return newPost.save().then((post) => {
-      expect(post.title).to.be.a('string');
+      expect(post).to.have.property('title');
     });
   });
+  it('should return a post with valid properties', () => {
+    return Post.find({}).then((posts) => {
+      expect(posts[0].title).to.be.a('string');
+      expect(posts[0].summary).to.be.a('string');
+      expect(posts[0].subreddit).to.be.a('string');
+    })
+  })
   it('should remove a post', () => {
     return Post.find({ title: "new post" }).remove().then(() => {
       return Post.find({ title: "new post"}).then((post) => {
@@ -47,6 +54,14 @@ describe('testing users', () => {
       expect(newUser.username).to.be.a('string');
     })
   });
+  it('should return a user with valid properties', () => {
+    return User.find({}).then((users) => {
+      expect(users[0]).to.have.property('username');
+      expect(users[0]).to.have.property('password');
+      expect(users[0]).to.have.property('createdAt');
+      expect(users[0]).to.have.property('updatedAt');
+    })
+  })
   it('should remove a user', () => {
     return User.find({ username: "test user" }).remove().then(() => {
       return User.find({ username: "test user"}).then((user) => {
