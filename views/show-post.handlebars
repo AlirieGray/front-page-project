@@ -33,10 +33,10 @@
     </form>
   </div>
 
-    {{#each this.replies}}
+    {{#each this.comments}}
       <div>
-        <p> reply is here! </p>
-        <p> {{this.content}} </p>
+        <p style="margin-left: 30px;"> {{this.content}} </p>
+        <p class="commentAuthor" style="margin-left: 40px !important;"> - {{this.author}} </p>
       </div>
     {{/each}}
   {{/each}}

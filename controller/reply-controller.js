@@ -27,26 +27,39 @@ module.exports = function(app) {
 
       // find comment in comments array of post
       // have to LOOP through recursively starting from TOP
-      post.comments.findById(commentId).then((comment) => {
-        console.log(comment.content);
+      // then save to comment.comments (not replies)
 
-        const reply = new Comment({
-          content: req.body.content,
-          author: username,
-          authorId: userId,
-          postId: postId
-        });
-        comment.replies.push(reply);
-        post.markModified('comments');
-        console.log("replies: ");
-        console.log(comment.replies);
-        return(post.save());
+      const findComment = (id, comments) => {
+        if (comments.length > 0) {
+          for (let i = 0; i < comments.length; i++) {
+            const found = comments[i];
+            // if we find the comment, return it
+            if (found._id == id) {
+              return found;
+            }
+            // otherwise, loop through the replies on the current comment
+            return findComment(id, comments[i].comments);
+          }
+        }
+      }
+
+      const comment = findComment(commentId, post.comments);
+
+      const reply = new Comment({
+        content: req.body.content,
+        author: username,
+        authorId: userId,
+        postId: postId
+      });
+
+      comment.comments.push(reply);
+      post.markModified('comments');
+      return post.save();
+
       }).then(() => {
         res.redirect('/posts/' + postId);
       }).catch((err) => {
         console.error(err);
       })
     })
-
-  });
 }
