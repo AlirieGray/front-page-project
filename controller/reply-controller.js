@@ -27,7 +27,7 @@ module.exports = function(app) {
 
       // find comment in comments array of post
       // have to LOOP through recursively starting from TOP
-      // then save to comment.comments (not replies)
+      // then save to comment.comments
 
       const findComment = (id, comments) => {
         if (comments.length > 0) {
@@ -38,7 +38,10 @@ module.exports = function(app) {
               return found;
             }
             // otherwise, loop through the replies on the current comment
-            return findComment(id, comments[i].comments);
+            const nextLevelComment = findComment(id, comments[i].comments);
+            if (nextLevelComment) {
+              return nextLevelComment;
+            }
           }
         }
       }

@@ -34,9 +34,14 @@
   </div>
 
     {{#each this.comments}}
-      <div>
-        <p style="margin-left: 30px;"> {{this.content}} </p>
-        <p class="commentAuthor" style="margin-left: 40px !important;"> - {{this.author}} </p>
+      <div style="margin-left: 40px !important;">
+        <p style="margin-left: 70px;"> {{this.content}} </p>
+        <p class="commentAuthor" style="margin-left: 100px !important;"> - {{this.author}} </p>
+        <form method="POST" action="/posts/{{@root.post.id}}/comments/{{this.id}}/replies" >
+          <textarea name="content" id="replyInput" placeholder="Reply to this comment"> </textarea>
+          <input type="hidden" name="userId" id="post-user-id" value={{currentUserId}} />
+          <button class="btn-flat" type="submit"> Reply </button>
+        </form>
       </div>
     {{/each}}
   {{/each}}
