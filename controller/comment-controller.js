@@ -7,6 +7,7 @@ module.exports = function(app) {
   app.post('/posts/:id/comments', function(req, res) {
     // anonymous comment
     var id = req.params.id;
+    console.log(req.body.userId);
     if (req.body.userId == 0) {
       var user = new User({
         username: "anonymous",
@@ -15,28 +16,28 @@ module.exports = function(app) {
       var comm = new Comment({
         content: req.body.content,
         author: user.username,
+        authorId: req.body.userId
       });
       Post.findById(req.params.id).exec(function(err, post) {
-        comm.save(function (err, comment) {
-          post.comments.unshift(comment);
-          console.log(post.comments);
-          post.save();
-          return res.redirect('/posts/' + id);
-        })
+        post.comments.unshift(comm);
+        post.save();
+        console.log('content')
+        console.log(comm.content);
+        return res.redirect('/posts/' + id);
       });
     } else {
     var author = User.findById(req.body.userId).exec().then(function(user) {
       var comm = new Comment({
         content: req.body.content,
         author: user.username,
+        authorId: req.body.userId
       });
       Post.findById(req.params.id).exec(function(err, post) {
-        comm.save(function (err, comment) {
-          post.comments.unshift(comment);
-          post.save();
-          console.log(post.comments);
-          return res.redirect('/posts/' + id);
-        })
+        post.comments.unshift(comm);
+        post.save();
+        console.log('content')
+        console.log(comm.content);
+        return res.redirect('/posts/' + id);
       })
     });
     }

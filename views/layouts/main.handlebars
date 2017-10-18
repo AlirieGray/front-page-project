@@ -13,6 +13,7 @@
   $(document).ready(function(){
     console.log("running on doc ready");
     $('.modal').modal();
+    $('select').material_select();
   });
   </script>
   <style>
@@ -58,6 +59,12 @@
       width: 400px;
       border-bottom-style: solid;
     }
+    .postSummary {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+    }
     .voteButtons {
       height: 200px;
     }
@@ -83,7 +90,7 @@
     }
     .showPostComments {
       display: flex;
-      flex-direction: column-reverse;
+      flex-direction: column;
       justify-content: center;
       width: 600px;
       margin: auto;
@@ -94,6 +101,10 @@
       width: 600px;
       justify-content: center;
       margin: auto;
+    }
+    .commentAuthor {
+      font-style: italic;
+      color: #bbb;
     }
     p {
       font-size: 20px !important;

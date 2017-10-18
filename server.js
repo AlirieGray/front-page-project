@@ -10,7 +10,7 @@ require('dotenv').config();
 
 // TODO: fix comments on comments (adds to databse but not appearing?)
 // TODO: fix style
-// TODO: figure out how to serve css from public folder 
+// TODO: figure out how to serve css from public folder
 
 // note: upvotes and downvotes are an array of *users ids*
 // if your id is in the upvotes array, you can't add to it again
@@ -80,9 +80,24 @@ app.get('/posts/:id', function(req, res) {
     if (req.user) {
       currentUser = req.user.id;
     }
+    console.log("comments");
+    console.log(post.comments);
+    console.log(post.subreddit);
     res.render('show-post', {post: post, currentUserId: currentUser, comments: post.comments});
   })
 });
+
+app.get('/r/:subreddit', function(req, res) {
+  Post.find({ subreddit: req.params.subreddit }).exec(function (err, posts) {
+    var currentUser;
+    if (req.user) {
+      currentUser = req.user.id;
+    } else {
+      currentUser = 0;
+    }
+    res.render('home', { post: posts, currentUserId: currentUser });
+  })
+})
 
 // login page
 app.get('/login', function(req, res) {

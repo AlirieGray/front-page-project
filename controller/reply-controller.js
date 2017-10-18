@@ -26,7 +26,8 @@ module.exports = function(app) {
     Post.findById(postId).then((post) => {
 
       // find comment in comments array of post
-      Comment.findById(commentId).then((comment) => {
+      // have to LOOP through recursively starting from TOP
+      post.comments.findById(commentId).then((comment) => {
         console.log(comment.content);
 
         const reply = new Comment({
