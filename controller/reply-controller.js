@@ -5,20 +5,6 @@ const User = require('../models/user');
 module.exports = function(app) {
   // post a reply to a comment
   app.post('/posts/:postId/comments/:commentId/replies', (req, res, next) => {
-    var username = "";
-    var userId = 0;
-    if (!req.user) {
-      const author = new User({
-        username: "anonymous",
-        password: "none",
-      });
-      username = author.username;
-    } else {
-      // get currently logged in user
-      const author = req.user;
-      username = req.user.username;
-      userId = req.user.id;
-    }
     const postId = req.params.postId;
     const commentId = req.params.commentId;
 
@@ -48,21 +34,48 @@ module.exports = function(app) {
 
       const comment = findComment(commentId, post.comments);
 
-      const reply = new Comment({
-        content: req.body.content,
-        author: username,
-        authorId: userId,
-        postId: postId
-      });
+      var username = "";
+      var userId = 0;
+      if (!req.user) {
+        const author = new User({
+          username: "anonymous",
+          password: "none",
+        });
+        username = author.username;
+        console.log(username);
 
-      comment.comments.push(reply);
-      post.markModified('comments');
-      return post.save();
+        const reply = new Comment({
+          content: req.body.content,
+          author: username,
+          authorId: userId,
+          postId: postId
+        });
 
-      }).then(() => {
-        res.redirect('/posts/' + postId);
-      }).catch((err) => {
-        console.error(err);
-      })
-    })
+        comment.comments.push(reply);
+        post.markModified('comments');
+        return post.save();
+      } else {
+        // get currently logged in user
+        userId = req.user.id;
+        User.findById(userId).then((user) => {
+          var username = user.username;
+
+          const reply = new Comment({
+            content: req.body.content,
+            author: username,
+            authorId: userId,
+            postId: postId
+          });
+
+          comment.comments.push(reply);
+          post.markModified('comments');
+          return post.save();
+        })
+      }
+}).then(() => {
+  res.redirect('/posts/' + postId);
+}).catch((err) => {
+  console.error(err);
+})
+})
 }
