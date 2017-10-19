@@ -28,14 +28,14 @@ var checkAuth = function (req, res, next) {
   // make sure the user has a JWT cookie
   if (typeof req.cookies.nToken === 'undefined' || req.cookies.nToken === null) {
     req.user = null;
-    console.log("no user");
+    //console.log("no user");
   } else {
     // if the user has a JWT cookie, decode it and set the user
     var token = req.cookies.nToken;
     var decodedToken = jwt.decode(token, { complete: true }) || {};
     req.user = decodedToken.payload;
-    console.log("user set");
-    console.log(req.user);
+    //console.log("user set");
+    //console.log(req.user);
   }
   // console.log(req.user);
   next();

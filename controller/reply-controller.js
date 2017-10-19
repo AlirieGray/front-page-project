@@ -14,13 +14,14 @@ module.exports = function(app) {
       // find comment in comments array of post
       // have to LOOP through recursively starting from TOP
       // then save to comment.comments
-
       const findComment = (id, comments) => {
         if (comments.length > 0) {
           for (let i = 0; i < comments.length; i++) {
             const found = comments[i];
             // if we find the comment, return it
             if (found._id == id) {
+              console.log("found");
+              console.log(found._id);
               return found;
             }
             // otherwise, loop through the replies on the current comment
@@ -36,6 +37,7 @@ module.exports = function(app) {
 
       var username = "";
       var userId = 0;
+      // handle anonymous replies to comments
       if (!req.user) {
         const author = new User({
           username: "anonymous",
@@ -54,7 +56,9 @@ module.exports = function(app) {
         comment.comments.push(reply);
         post.markModified('comments');
         return post.save();
-      } else {
+      }
+      // handle author of reply
+      else {
         // get currently logged in user
         userId = req.user.id;
         User.findById(userId).then((user) => {
@@ -72,10 +76,10 @@ module.exports = function(app) {
           return post.save();
         })
       }
-}).then(() => {
-  res.redirect('/posts/' + postId);
-}).catch((err) => {
-  console.error(err);
-})
-})
+    }).then(() => {
+      res.redirect('/posts/' + postId);
+    }).catch((err) => {
+      console.error(err);
+    })
+  })
 }
